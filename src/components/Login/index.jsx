@@ -30,6 +30,7 @@ function Login() {
       await auth.signInWithEmailAndPassword(email,password);
       setEmail('')
       setPassword('')
+      history.push('/')
     } catch (error) {
       console.log(error);
       setMessage(error.message)

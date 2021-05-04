@@ -15,14 +15,9 @@ function App() {
   const [user, loading] = useAuthState(auth);
   const history = useHistory();
 
-  useEffect(()=>{
-    console.log(user)
-  },[])
-
   if (loading){
     return <Loading />
   }
-
 
   return (
     <div className="App">

@@ -3,7 +3,8 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { auth, provider } from "../../firebase";
 import Login from "../Login";
-import Logo from '../../assets/img/logo_gray_bg.png'
+import Logo from '../../assets/img/logo_gray_bg.png';
+import Api from '../../util/api.util'
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -16,7 +17,8 @@ function Signup() {
   const handleGoogleSignInClick = async (e) => {
     e.preventDefault();
     try {
-      await auth.signInWithPopup(provider);
+      let tempUser = await auth.signInWithPopup(provider);
+      await Api.SignupWithGoogle({email: tempUser.user.email, username: tempUser.user.displayName})
     } catch (errr) {
       console.log(errr);
     }
@@ -39,7 +41,7 @@ function Signup() {
               displayName: username,
               photoURL: "https://picsum.photos/100",
             });
-            
+            await Api.SignupWithEmail({"email": email, "username": username})
           }else{
             throw new Error('Invalid username, please use only letters and numbers, no spaces')
           }

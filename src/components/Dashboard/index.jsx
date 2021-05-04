@@ -1,14 +1,18 @@
 import { TextField } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import styled from 'styled-components';
 import { auth } from '../../firebase';
 import TickerTape from '../TickerTape';
 import SearchIcon from '@material-ui/icons/Search';
 import CryptoTable from '../CryptoTable';
+import { Button } from '@material-ui/core';
 
 function Dashboard() {
   const [user,loading] = useAuthState(auth);
+  const [query, setQuery] = useState("")
+
+  
 
   return (
     <DashboardMainContainer>
@@ -21,14 +25,14 @@ function Dashboard() {
 
       <LowerSectionContainer>
         <SearchContainer>
-          <form>
-          <TextField className='coinInput' label="Coin ticker" type="search" />
+          <form  >
+          <TextField className='coinInput' label="Coin ticker" value={query} type="search" onChange={(e)=>{setQuery(e.target.value)}} />
           <SearchIcon />
           </form>
 
         </SearchContainer>
 
-        <CryptoTable />
+        <CryptoTable query={query} setQuery={setQuery}/>
 
       </LowerSectionContainer>
 

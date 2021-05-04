@@ -11,35 +11,54 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { Button } from '@material-ui/core';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import Api from '../../util/api.util'
 
 
-function CryptoTable() {
+function CryptoTable({query, setQuery}) {
   const [user, loading] = useAuthState(auth);
   const [page, setPage] = useState(0);
   const [rows, setRows] = useState(null);
   const [allRows, setAllRows] = useState(null);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows?.length - page * rowsPerPage);
 
   useEffect(() => {
     getTickers();
-  }, []);
+  },[]);
+
+  useEffect(()=>{
+    let temp = allRows?.slice(0, rowsPerPage);
+    setRows(temp);
+  },[allRows])
+
 
   const getTickers = async () => {
     let url = `${process.env.REACT_APP_LUNARCRUSH_MARKET_ENDPOINT}data=market&key=${process.env.REACT_APP_LUNARCRUSH_KEY}&page=${page}&limit=100&sort=acr`;
     try {
       let req = await axios.get(url);
+      console.log(req)
       setAllRows(req.data.data);
-      setTimeout(() => {
-        let temp = allRows.slice(0, rowsPerPage);
-        setRows(temp);
-      });
+      let temp = allRows?.slice(0, rowsPerPage);
+      setRows(temp);
+      
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleAddToWatchlistClick = async(symbol)=>{
+    try {
+      let req = await Api.handleAddToWatchlistClick({symbol: symbol, email: user.email})
+      console.log(req)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleChangeRowsPerPage = (event) => {
     setRows(allRows.slice(0, parseInt(event.target.value)));
@@ -78,24 +97,53 @@ function CryptoTable() {
             <TableCell component="th" scope="row">
                 <span style={{fontWeight: 'bold'}}>Social score</span>
             </TableCell>
+            <TableCell component="th" scope="row">
+                <span style={{fontWeight: 'bold'}}>Add watchlist</span>
+            </TableCell>
             </TableRow>
-
-
               {rows &&
+                !query &&
                 rows.length > 0 &&
                 rows.map((row) => {
-                  console.log(row);
                   return (
                     <TableRow key={row.n}>
-                      <TableCell>{row.n}</TableCell>
+                      <TableCell>{row.n} ({row.s})</TableCell>
                       <TableCell>{row.p}</TableCell>
-                      <TableCell className={row.pc0?"red": "green"}>{row.pc}%</TableCell>
+                      <TableCell className={row.pc<0?"red": "green"}>{row.pc}%</TableCell>
                       <TableCell className={row.pch<0?"red":"green"}>{row.pch}%</TableCell>
                       <TableCell>{row.mc}</TableCell>
                       <TableCell>{row.t}</TableCell>
                       <TableCell>{row.ss}</TableCell>
+                      <TableCell><Button type='button' style={{backgroundColor: '#929292', padding: ''}} 
+                        onClick={()=>handleAddToWatchlistClick(row.s)}
+                      >
+                        <BookmarkBorderIcon style={{color: 'white'}}/>
+                      </Button></TableCell>
                     </TableRow>
                   );
+                })}
+                {allRows &&
+                query &&
+                allRows.length > 0 &&
+                allRows.map((row) => {
+                  if ((row.n.toLowerCase().includes(query.toLowerCase()))||(row.s.toLowerCase().includes(query.toLowerCase()))){
+                    return (
+                    <TableRow key={row.n}>
+                      <TableCell>{row.n} ({row.s})</TableCell>
+                      <TableCell>{row.p}</TableCell>
+                      <TableCell className={row.pc<0?"red": "green"}>{row.pc}%</TableCell>
+                      <TableCell className={row.pch<0?"red":"green"}>{row.pch}%</TableCell>
+                      <TableCell>{row.mc}</TableCell>
+                      <TableCell>{row.t}</TableCell>
+                      <TableCell>{row.ss}</TableCell>
+                      <TableCell><Button type='button' style={{backgroundColor: '#929292', padding: ''}} 
+                        onClick={()=>handleAddToWatchlistClick(row.n)}
+                      >
+                        <BookmarkBorderIcon style={{color: 'white'}}/>
+                      </Button></TableCell>
+                    </TableRow>
+                  );
+                  }
                 })}
 
               {emptyRows > 0 && (

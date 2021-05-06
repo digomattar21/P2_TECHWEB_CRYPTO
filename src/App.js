@@ -10,6 +10,7 @@ import Main from './components/Main';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Watchlist from './components/Watchlist';
 
 function App() {
   const [user, loading] = useAuthState(auth);
@@ -29,7 +30,7 @@ function App() {
             <AppBody>
               <Switch>
                 <Route exact path='/' component={Dashboard}/>
-                {/* <Route exact path ='/watchlist'component={Watchlist}/> */}
+                <Route exact path ='/watchlist' component={Watchlist}/>
               </Switch>
             </AppBody>
           </>

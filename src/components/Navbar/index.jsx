@@ -13,21 +13,40 @@ function Navbar() {
   var history = useHistory();
   const [user,loading] = useAuthState(auth);
 
+  const handleWatchlistClick = (e)=>{
+    history.push('/watchlist')
+  }
+
+  const handleHomeClick = ()=>{
+    history.push('/')
+  }
+
   return (
     <NavbarContainer>
       <AppBar position="static">
         <Toolbar className="navbar">
-          <div>
-            <img src={Logo1} alt='logo' height="40"/>
-          </div>
-
+          {!user && (
+            <div>
+              <img onClick={()=>handleHomeClick()} src={Logo1} alt='logo' height="40"/>
+            </div>
+          )}
           {user && (
+            <>
+            <div>
+            <img onClick={()=>handleHomeClick()} src={Logo1} alt='logo' height="40"/>
+            <h4 
+            className="watchlist-link"
+            onClick={(e)=>handleWatchlistClick()}
+            
+            >Watchlist</h4>
+          </div>
             <div className="navbar-right">
             <Button type='button' className='settingsbtn'>
               <SettingsIcon />
             </Button>
             <Button className='signoutbtn' onClick={()=>auth.signOut()} >Log out</Button>
           </div>
+          </>
           )}
         </Toolbar>
       </AppBar>
@@ -44,6 +63,12 @@ const NavbarContainer = styled.div`
     background-color: #545454;
     display: flex;
     justify-content: space-between;
+    .watchlist-link{
+      :hover{
+        opacity: 0.7;
+        cursor: pointer;
+      }
+    }
 
     .settingsbtn{
       color: white;
@@ -57,6 +82,12 @@ const NavbarContainer = styled.div`
     >div{
       display: flex;
       align-items: center;
+      >img{
+        :hover{
+          cursor: pointer;
+          opacity: 0.8;
+        }
+      }
     }
   }
 

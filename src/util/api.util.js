@@ -55,6 +55,15 @@ class Api {
     }
   }
 
+  async GetWatchlistInfo(payload){
+    try {
+      let req = await this.api.post('/private/user/getwatchlistinfo', payload);
+      return req
+    } catch (error) {
+      throw error
+    }
+  }
+
 
 }
 

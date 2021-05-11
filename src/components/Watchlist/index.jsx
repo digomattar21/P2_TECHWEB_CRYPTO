@@ -56,6 +56,7 @@ function Watchlist() {
       <TickersContainer>
       {tickerList && tickerList.length>0 && 
       tickerList.map((ticker)=>{
+        console.log(ticker)
         return (
           <TickerCard ticker={ticker}/>
         )
@@ -83,4 +84,5 @@ const TickersContainer = styled.div `
   display: flex;
   margin-top: 30px;
   justify-content: center;
+  flex-wrap: wrap;
 `;

@@ -24,11 +24,22 @@ function TickerCard({ ticker }) {
         <h6>Volume: </h6>
         <h6>Volume 24h: </h6>
         <h6>Volatility: </h6>
-      </TickerLeft>
+        <h6>Mkt Cap: </h6>
+        <h6>7d change:</h6>
+        <h6>30d change:</h6>
+        <h6>SocialScore rank: </h6>
+        <h6>Average sentiment: </h6>
+      </TickerLeft> 
       <TickerRight>
         <h6>{(ticker.volume/1000000000).toFixed(2)} B</h6>
         <h6>{(ticker.volume_24h/1000000000).toFixed(2)} B</h6>
         <h6>{ticker.volatility.toFixed(3)}</h6>
+        <h6>{(ticker.market_cap/1000000000).toFixed(2)}B</h6>
+        <h6 className={ticker.percent_change_7d>0?"green": "red"}>{ticker.percent_change_7d}%</h6>
+        <h6 className={ticker.percent_change_30d>0?"green": "red"}>{ticker.percent_change_30d}%</h6>
+        <h6>{ticker.social_score_24h_rank}</h6>
+        <h6>{ticker.average_sentiment}</h6>
+
       </TickerRight>
       </TickerInfo>
 
@@ -66,6 +77,12 @@ const TickerCardCont = styled.div`
   margin-left: 20px;
   margin-right: 20px;
   align-items: flex-start;
+  margin-bottom: 30px;
+  :hover{
+    opacity:0.7;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35), 0 2px 3px rgba(0, 0, 0, 0.35)
+  }
 `;
 
 const TickerInfo = styled.div`
@@ -79,9 +96,24 @@ const TickerLeft = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  >h6{
+    margin-top: 3px;
+  }
 `;
 const TickerRight = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  >h6{
+    color: blue;
+    margin-top: 3px;
+  }
+
+  .green{
+    color: green;
+  }
+
+  .red{
+    color: red;
+  }
 `;

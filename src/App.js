@@ -11,6 +11,7 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Watchlist from './components/Watchlist';
+import Graph from './components/Graph';
 
 function App() {
   const [user, loading] = useAuthState(auth);
@@ -31,6 +32,7 @@ function App() {
               <Switch>
                 <Route exact path='/' component={Dashboard}/>
                 <Route exact path ='/watchlist' component={Watchlist}/>
+                <Route exact path ='/graph' component={Graph}/>
               </Switch>
             </AppBody>
           </>

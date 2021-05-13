@@ -1,10 +1,20 @@
 import React from "react";
+import {useHistory} from 'react-router-dom'
 import styled from "styled-components";
 
 function TickerCard({ ticker }) {
-  console.log(ticker);
+  const history = useHistory();
+
+  const handleCardClick = ()=>{
+    let tv_ticker = `${ticker.symbol.toUpperCase()}USD`
+    history.push({
+      pathname:'/graph',
+      state:{tv_ticker:tv_ticker}
+    })
+  }
+  
   return (
-    <TickerCardCont>
+    <TickerCardCont onClick={()=>handleCardClick()}>
       <TickerTitle>
         <h4>{ticker.symbol} </h4>
         <div>

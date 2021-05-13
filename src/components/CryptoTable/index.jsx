@@ -41,7 +41,7 @@ function CryptoTable({query, setQuery}) {
 
 
   const getTickers = async () => {
-    let url = `${process.env.REACT_APP_LUNARCRUSH_MARKET_ENDPOINT}data=market&key=${process.env.REACT_APP_LUNARCRUSH_KEY}&page=${page}&limit=100`;
+    let url = `${process.env.REACT_APP_LUNARCRUSH_MARKET_ENDPOINT}data=market&key=${process.env.REACT_APP_LUNARCRUSH_KEY}&page=${page}&limit=200`;
     try {
       let req = await axios.get(url);
       console.log(req)

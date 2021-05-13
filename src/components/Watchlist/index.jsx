@@ -76,7 +76,6 @@ const WatchlistContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
 `;
 
 const TickersContainer = styled.div `

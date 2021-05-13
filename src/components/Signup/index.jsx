@@ -1,5 +1,5 @@
 import { Button, TextField } from "@material-ui/core";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { auth, provider } from "../../firebase";
 import Login from "../Login";
@@ -27,7 +27,7 @@ function Signup() {
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
     let passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$/;
-    let emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    let emailRegex = /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     let usernameRegex = /^[a-z0-9_-]{3,15}$/
     try {
       if (passRegex.test(password)) {
@@ -52,7 +52,7 @@ function Signup() {
         throw new Error('Your password must contain at least 8 characters, lowercase and uppercase letters, numbers and a special digit')
       }
     } catch (error) {
-      setMessage(error)
+      setMessage(error.message)
     }
   };
 
@@ -116,7 +116,7 @@ function Signup() {
                 <Button type="submit" variant="contained">
                   Submit
                 </Button>
-                {message && <h5 style={{color: 'red', maxWidth: '230px'}}>{message}</h5>}
+              
               </form>
               {message && <h6>{message}</h6>}
             </SignUpFormContainer>

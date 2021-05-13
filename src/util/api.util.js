@@ -64,6 +64,15 @@ class Api {
     }
   }
 
+  async RemoveTickerFromWatchlist(payload){
+    try {
+      let req = await this.api.post("/private/user/removetickerfromwatchlist", payload)
+      return req
+    } catch (error) {
+      throw error
+    }
+  }
+
 
 }
 

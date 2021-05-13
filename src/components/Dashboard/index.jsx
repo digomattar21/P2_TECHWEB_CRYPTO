@@ -3,10 +3,8 @@ import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import styled from 'styled-components';
 import { auth } from '../../firebase';
-import TickerTape from '../TickerTape';
 import SearchIcon from '@material-ui/icons/Search';
 import CryptoTable from '../CryptoTable';
-import { Button } from '@material-ui/core';
 
 function Dashboard() {
   const [user,loading] = useAuthState(auth);

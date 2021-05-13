@@ -27,8 +27,6 @@ function CryptoTable({query, setQuery}) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filter,setFilter] = useState(0);
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows?.length - page * rowsPerPage);
 
   useEffect(() => {
     getTickers();
@@ -44,7 +42,6 @@ function CryptoTable({query, setQuery}) {
     let url = `${process.env.REACT_APP_LUNARCRUSH_MARKET_ENDPOINT}data=market&key=${process.env.REACT_APP_LUNARCRUSH_KEY}&page=${page}&limit=200`;
     try {
       let req = await axios.get(url);
-      console.log(req)
       setAllRows(req.data.data);
     } catch (error) {
       console.log(error);
@@ -53,8 +50,7 @@ function CryptoTable({query, setQuery}) {
 
   const handleAddToWatchlistClick = async(symbol)=>{
     try {
-      let req = await Api.handleAddToWatchlistClick({symbol: symbol, email: user.email})
-      console.log(req)
+      await Api.handleAddToWatchlistClick({symbol: symbol, email: user.email})
 
     } catch (error) {
       console.log(error)
@@ -67,7 +63,6 @@ function CryptoTable({query, setQuery}) {
   };
 
   const handleChangePage = (event, newPage) => {
-    console.log(newPage)
     setRows(allRows?.slice(newPage*rowsPerPage, (newPage+1)*rowsPerPage))
     setPage(newPage);
   };

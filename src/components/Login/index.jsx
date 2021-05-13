@@ -1,5 +1,5 @@
 import { Button, TextField } from "@material-ui/core";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { auth, provider } from "../../firebase";
 import SignUp from '../Signup';
@@ -32,7 +32,6 @@ function Login() {
       setPassword('')
       history.push('/')
     } catch (error) {
-      console.log(error);
       setMessage(error.message)
     }
 

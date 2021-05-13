@@ -28,6 +28,25 @@ function Watchlist() {
 
   }
 
+  const handleRemoveFromWatchlistClick = async (ticker) =>{
+    let payload = {email: user.email, tickerSymbol: ticker.symbol}
+    try {
+      
+      let temp2 = tickerList.filter((val)=>{
+        return val.symbol!==ticker.symbol
+      })
+      setTickerList(temp2)
+      await Api.RemoveTickerFromWatchlist(payload);
+
+      
+      
+    } catch (error) {
+      console.log(error)
+    }
+
+
+  }
+
   const getTickerMainInfo= async(tickers)=>{
     if (tickers.length===0){
       setTickerList([])
@@ -36,11 +55,9 @@ function Watchlist() {
     let temp = []
     tickers.map((ticker)=> temp.push(ticker.symbol))
     let str = temp.join(',')
-    console.log(str)
     let url = `${process.env.REACT_APP_LUNARCRUSH_MARKET_ENDPOINT}data=assets&key=${process.env.REACT_APP_LUNARCRUSH_KEY}&symbol=${str}`
     try {
       let req = await axios.get(url);
-      console.log(req)
       setTickerList(req.data.data)
     } catch (error) {
       console.log(error)
@@ -64,7 +81,7 @@ function Watchlist() {
       {tickerList && tickerList.length>0 && 
       tickerList.map((ticker)=>{
         return (
-          <TickerCard ticker={ticker}/>
+          <TickerCard ticker={ticker} handleRemoveFromWatchlistClick={handleRemoveFromWatchlistClick}/>
         )
       })
       }

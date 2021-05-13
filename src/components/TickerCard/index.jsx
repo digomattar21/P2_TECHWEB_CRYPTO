@@ -1,8 +1,10 @@
 import React from "react";
 import {useHistory} from 'react-router-dom'
 import styled from "styled-components";
+import ClearIcon from '@material-ui/icons/Clear';
+import InsertChartIcon from '@material-ui/icons/InsertChart';
 
-function TickerCard({ ticker }) {
+function TickerCard({ ticker , handleRemoveFromWatchlistClick}) {
   const history = useHistory();
 
   const handleCardClick = ()=>{
@@ -12,9 +14,15 @@ function TickerCard({ ticker }) {
       state:{tv_ticker:tv_ticker}
     })
   }
+
+  
   
   return (
-    <TickerCardCont onClick={()=>handleCardClick()}>
+    <TickerCardCont>
+        <div className='iconsCont'>
+          <InsertChartIcon id="chartIcon" onClick={()=>handleCardClick()}/>
+          <ClearIcon id='clearIcon' onClick={()=>handleRemoveFromWatchlistClick(ticker)}/>
+        </div>
       <TickerTitle>
         <h4>{ticker.symbol} </h4>
         <div>
@@ -28,6 +36,7 @@ function TickerCard({ ticker }) {
             ({ticker.percent_change_24h}%)
         </span>
         </div>
+        
       </TickerTitle>
       <TickerInfo>
             <TickerLeft>
@@ -88,10 +97,25 @@ const TickerCardCont = styled.div`
   margin-right: 20px;
   align-items: flex-start;
   margin-bottom: 30px;
-  :hover{
-    opacity:0.7;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35), 0 2px 3px rgba(0, 0, 0, 0.35)
+  .iconsCont{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+  #chartIcon{
+    color: blue;
+    :hover{
+      opacity: 0.7;
+      cursor: pointer;
+    }
+  }
+
+  #clearIcon{
+    color: red;
+    :hover{
+      opacity: 0.7;
+      cursor: pointer;
+    }
   }
 `;
 

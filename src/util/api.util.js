@@ -4,7 +4,7 @@ import { auth } from "../firebase";
 class Api {
   constructor() {
     this.api = axios.create({
-      baseURL: 'http://localhost:8000'
+      baseURL: 'https://rbcrypto.herokuapp.com'
     });
 
     this.api.interceptors.request.use((config) => {

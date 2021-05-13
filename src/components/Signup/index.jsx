@@ -52,8 +52,7 @@ function Signup() {
         throw new Error('Your password must contain at least 8 characters, lowercase and uppercase letters, numbers and a special digit')
       }
     } catch (error) {
-      console.log(error.message);
-      setMessage(error.message)
+      setMessage(error)
     }
   };
 

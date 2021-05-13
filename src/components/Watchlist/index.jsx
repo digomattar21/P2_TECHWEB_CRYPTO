@@ -20,7 +20,6 @@ function Watchlist() {
 
     try {
       let req = await Api.GetWatchlistInfo(payload);
-      console.log(req)
       getTickerMainInfo(req.data.tickers)
 
     } catch (error) {
@@ -30,6 +29,10 @@ function Watchlist() {
   }
 
   const getTickerMainInfo= async(tickers)=>{
+    if (tickers.length===0){
+      setTickerList([])
+      return 
+    }
     let temp = []
     tickers.map((ticker)=> temp.push(ticker.symbol))
     let str = temp.join(',')
@@ -53,6 +56,10 @@ function Watchlist() {
         <Loading />
       )}
 
+      {tickerList && tickerList.length===0 && (
+        <h4 style={{marginTop: '50px', color: '#545454'}}>You don't have anything in your watchlist</h4>
+      )}
+
       <TickersContainer>
       {tickerList && tickerList.length>0 && 
       tickerList.map((ticker)=>{
@@ -61,6 +68,7 @@ function Watchlist() {
         )
       })
       }
+      
       </TickersContainer>
       
 
